@@ -73,4 +73,20 @@ describe("gameBoard Class", () => {
             );
         });
     });
+
+    describe("areAllShipsSunk func", () => {
+        test("when all ships are not sunk", () => {
+            expect(gameboard.areAllShipsSunk()).toBe(false);
+        });
+
+        test("when all ships are sunk", () => {
+            gameboard.receiveAttack("b", 7);
+            gameboard.receiveAttack("c", 7);
+            gameboard.receiveAttack("d", 7);
+            gameboard.receiveAttack("e", 7);
+            expect(gameboard.areAllShipsSunk()).toBe(false);
+            gameboard.receiveAttack("f", 7);
+            expect(gameboard.areAllShipsSunk()).toBe(true);
+        });
+    });
 });
