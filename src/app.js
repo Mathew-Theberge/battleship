@@ -22,6 +22,8 @@ export class Ship {
 export class Gameboard {
     constructor() {
         this.board = this.#createBoard();
+        this.attackLog = [];
+        this.allAttacks = [];
     }
 
     #allShips = [];
@@ -109,5 +111,23 @@ export class Gameboard {
             }
         }
         return null;
+    }
+
+    receiveAttack(char, num) {
+        console.log(this.missedAttacks);
+        if (this.allAttacks.includes(char + num)) {
+            return "already been attacked";
+        }
+        if (this.board.get(char)[num] === 0) {
+            this.allAttacks.push(char + num);
+            this.attackLog.push([char + num, "miss"]);
+            return "miss";
+        }
+        if (this.board.get(char)[num] instanceof Ship) {
+            this.allAttacks.push(char + num);
+            this.attackLog.push([char + num, "hit"]);
+            this.board.get(char)[num].hit();
+            return "hit";
+        }
     }
 }
