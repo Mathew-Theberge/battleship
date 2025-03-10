@@ -5,17 +5,14 @@ export class Ship {
         this.length = length;
     }
     #hits = 0;
-    #sunk = false;
 
     hit() {
         this.#hits++;
     }
 
     isSunk() {
-        if (this.#hits >= this.length) {
-            this.#sunk = true;
-            return true;
-        } else return false;
+        if (this.#hits >= this.length) return true;
+        else return false;
     }
 }
 
@@ -129,5 +126,12 @@ export class Gameboard {
             this.board.get(char)[num].hit();
             return "hit";
         }
+    }
+
+    areAllShipsSunk() {
+        for (const ship of this.#allShips) {
+            if (!ship.isSunk()) return false;
+        }
+        return true;
     }
 }
