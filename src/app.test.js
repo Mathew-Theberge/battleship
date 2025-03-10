@@ -52,12 +52,10 @@ describe("gameBoard Class", () => {
     describe("receiveAttck func", () => {
         test("on blank tile", () => {
             expect(gameboard.receiveAttack("c", 4)).toBe("miss");
-            console.log(gameboard.prevAttacks);
         });
 
         test("on ocupied tile", () => {
             expect(gameboard.receiveAttack("b", 4)).toBe("hit");
-            console.log(gameboard.prevAttacks);
         });
 
         test("sinking ship", () => {
@@ -67,6 +65,12 @@ describe("gameBoard Class", () => {
             expect(gameboard.board.get("b")[6].isSunk()).toBe(false);
             gameboard.receiveAttack("b", 6);
             expect(gameboard.board.get("b")[6].isSunk()).toBe(true);
+        });
+
+        test("attack same spot", () => {
+            expect(gameboard.receiveAttack("b", 4)).toBe(
+                "already been attacked",
+            );
         });
     });
 });
