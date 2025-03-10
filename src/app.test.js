@@ -23,7 +23,7 @@ describe("gameBoard Class", () => {
             expect(gameboard.board.get("f")[7]).toBeInstanceOf(Ship);
         });
 
-        test("ship placement in free tiles ver", () => {
+        test("ship placement in free tiles horizontally", () => {
             gameboard.placeShip("b", 2, "hor", 5);
             expect(gameboard.board.get("b")[2]).toBeInstanceOf(Ship);
             expect(gameboard.board.get("b")[3]).toBeInstanceOf(Ship);
@@ -32,7 +32,9 @@ describe("gameBoard Class", () => {
             expect(gameboard.board.get("b")[6]).toBeInstanceOf(Ship);
         });
 
-        test("ship placement with in bound start cords but would go out of bounds", () => {});
+        test("ship placement with in bound start cords but would go out of bounds", () => {
+            expect(gameboard.placeShip("c", 9, "hor", 3)).toBeNull();
+        });
 
         test("ship placement with out of bound cords", () => {
             expect(gameboard.placeShip("v", 13, "hor", 3)).toBeNull();
