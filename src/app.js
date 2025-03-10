@@ -135,3 +135,10 @@ export class Gameboard {
         return true;
     }
 }
+
+export class Player {
+    constructor(playerType) {
+        this.playerType = playerType;
+        this.gameboard = new Gameboard();
+    }
+}
