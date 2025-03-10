@@ -39,9 +39,6 @@ export class Gameboard {
 
     #isTileEmpty(char, num) {
         if (this.board.get(char)[num] !== 0) {
-            if (isBrowser) {
-                alert("cannot place ships ontop of each other");
-            }
             return false;
         } else {
             return true;
@@ -50,46 +47,66 @@ export class Gameboard {
 
     #isInBounds(char, num) {
         if (!this.#letterColumn.includes(char) || num > 10 || num < 0) {
-            if (isBrowser) {
-                alert("must pick letter a-j and number 1-10");
-            }
             return false;
         } else {
             return true;
         }
     }
 
-    #getEndCharAndIndex(char, shipLen) {
-        const endCharIndex =
-            this.#letterColumn.findIndex((value) => {
-                return value === char;
-            }) +
-            (shipLen - 1);
+    #isPlacementValid(char, num, dir, shipLen) {
+        const currCharIndex = this.#letterColumn.findIndex((value) => {
+            return value === char;
+        });
+        const endCharIndex = currCharIndex + shipLen - 1;
+        const charColumn = this.#letterColumn.slice(
+            currCharIndex,
+            endCharIndex + 1,
+        );
+        if (dir === "ver") {
+            for (const char of charColumn) {
+                if (
+                    !this.#isInBounds(char, num) ||
+                    !this.#isTileEmpty(char, num)
+                ) {
+                    return [false];
+                }
+            }
+            return [true, charColumn];
+        }
 
-        return [this.#letterColumn[endCharIndex], endCharIndex];
+        if (dir === "hor") {
+            for (let i = 0; i < shipLen; i++) {
+                if (
+                    !this.#isInBounds(char, num + i) ||
+                    !this.#isTileEmpty(char, num + i)
+                ) {
+                    return [false];
+                }
+            }
+            return [true];
+        }
     }
 
     placeShip(char, num, dir, shipLen) {
-        if (!this.#isInBounds(char, num)) return null;
-
-        const endChar = this.#getEndCharAndIndex(char, shipLen)[0];
-        const endCharIndex = this.#getEndCharAndIndex(char, shipLen)[1];
-        const endNum = num + shipLen - 1;
-
-        if (dir === "ver" && this.#isInBounds(endChar, num)) {
-            const ship = new Ship(shipLen);
-            for (let i = 0; i < shipLen; i++) {
-                this.board.get(`${this.#letterColumn[endCharIndex - i]}`)[num] =
-                    ship;
+        if (dir === "ver") {
+            const results = this.#isPlacementValid(char, num, dir, shipLen);
+            if (results[0]) {
+                const ship = new Ship(shipLen);
+                this.#allShips.push(ship);
+                for (const char of results[1]) {
+                    this.board.get(char)[num] = ship;
+                }
             }
         }
 
-        if (dir === "hor" && this.#isInBounds(char, endNum)) {
-            const ship = new Ship(shipLen);
-            for (let i = 0; i < shipLen; i++) {
-                this.board.get(char)[num + i] = ship;
+        if (dir === "hor") {
+            if (this.#isPlacementValid(char, num, dir, shipLen)[0]) {
+                const ship = new Ship(shipLen);
+                this.#allShips.push(ship);
+                for (let i = 0; i < shipLen; i++) {
+                    this.board.get(char)[num + i] = ship;
+                }
             }
-            console.log(this.board);
         }
         return null;
     }

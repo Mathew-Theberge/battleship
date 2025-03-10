@@ -32,6 +32,10 @@ describe("gameBoard Class", () => {
             expect(gameboard.board.get("b")[6]).toBeInstanceOf(Ship);
         });
 
+        test("ship placement on occupied tiles", () => {
+            expect(gameboard.placeShip("b", 1, "hor", 5)).toBeNull();
+        });
+
         test("ship placement with in bound start cords but would go out of bounds", () => {
             expect(gameboard.placeShip("c", 9, "hor", 3)).toBeNull();
         });
