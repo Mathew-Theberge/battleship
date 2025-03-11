@@ -22,7 +22,6 @@ export class Gameboard {
         this.attackLog = [];
         this.allAttacks = [];
     }
-
     #allShips = [];
     #letterColumn = "abcdefghij".split("");
 
@@ -125,10 +124,17 @@ export class Gameboard {
             this.allAttacks.push(char + num);
             this.attackLog.push([char + num, "hit"]);
             this.board.get(char)[num].hit();
-            this.board.get(char)[num] = "hit";
-            return "hit";
+            if (this.board.get(char)[num].isSunk()) {
+                this.board.get(char)[num] = "hit";
+                return "sunk";
+            } else {
+                this.board.get(char)[num] = "hit";
+                return "hit";
+            }
         }
     }
+
+    isShipSunk() {}
 
     areAllShipsSunk() {
         for (const ship of this.#allShips) {

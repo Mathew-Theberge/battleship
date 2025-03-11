@@ -61,10 +61,8 @@ describe("gameBoard Class", () => {
         test("sinking ship", () => {
             gameboard.receiveAttack("b", 2);
             gameboard.receiveAttack("b", 3);
-            gameboard.receiveAttack("b", 5);
-            expect(gameboard.board.get("b")[6].isSunk()).toBe(false);
-            gameboard.receiveAttack("b", 6);
-            expect(gameboard.board.get("b")[6].isSunk()).toBe(true);
+            expect(gameboard.receiveAttack("b", 5)).toBe("hit");
+            expect(gameboard.receiveAttack("b", 6)).toBe("sunk");
         });
 
         test("attack same spot", () => {
