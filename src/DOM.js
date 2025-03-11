@@ -81,3 +81,48 @@ export function renderAttacks(board, player) {
         }
     }
 }
+
+export function renderAttackLog(enemysBoard) {
+    const log = document.querySelector("footer");
+    log.replaceChildren();
+    enemysBoard.attackLog.forEach((arr) => {
+        const cords = document.createElement("span");
+        if (arr[1] === "hit") cords.classList.add("hitLogMsg");
+        cords.textContent = `${arr[0]}, `;
+        log.append(cords);
+    });
+}
+
+export function renderStartScreenUI() {
+    const button = document.createElement("button");
+    button.id = "playComputer";
+    button.textContent = "Play Computer";
+    document.body.append(button);
+}
+
+export function renderPlayComputerUI() {
+    document.body.replaceChildren();
+    const header = document.createElement("header");
+    const section = document.createElement("section");
+    const shipContainer = document.createElement("div");
+    const boardContainer = document.createElement("div");
+    const board1 = document.createElement("div");
+    const player1 = document.createElement("div");
+    const board2 = document.createElement("div");
+    const player2 = document.createElement("div");
+    const footer = document.createElement("footer");
+
+    section.id = "mainGame";
+    shipContainer.id = "shipContainer";
+    boardContainer.classList.add("boardContainer");
+    board1.id = "board1";
+    player1.id = "player1";
+    board2.id = "board2";
+    player2.id = "player2";
+    header.textContent = "BattleShip";
+    document.body.append(header, section, footer);
+    section.append(shipContainer, boardContainer);
+    boardContainer.append(board1, board2);
+    board1.append(player1);
+    board2.append(player2);
+}
