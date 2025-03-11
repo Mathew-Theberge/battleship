@@ -71,3 +71,7 @@
     background-size: 85%;
     background-position: center;
 }
+
+.hitLogMsg {
+    color: red;
+}
