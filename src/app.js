@@ -56,11 +56,9 @@ export class Gameboard {
         const currCharIndex = this.#letterColumn.findIndex((value) => {
             return value === char;
         });
+        const letterArr = "abcdefghijklmnop".slice();
         const endCharIndex = currCharIndex + shipLen - 1;
-        const charColumn = this.#letterColumn.slice(
-            currCharIndex,
-            endCharIndex + 1,
-        );
+        const charColumn = letterArr.slice(currCharIndex, endCharIndex + 1);
         if (dir === "ver") {
             for (const char of charColumn) {
                 if (
@@ -95,6 +93,7 @@ export class Gameboard {
                 for (const char of results[1]) {
                     this.board.get(char)[num] = ship;
                 }
+                return "success";
             }
         }
 
@@ -105,6 +104,7 @@ export class Gameboard {
                 for (let i = 0; i < shipLen; i++) {
                     this.board.get(char)[num + i] = ship;
                 }
+                return "success";
             }
         }
         return null;

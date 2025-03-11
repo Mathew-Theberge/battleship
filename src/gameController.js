@@ -33,19 +33,12 @@ export const gameController = {
             gameController.player2.name,
         );
 
-        gameController.player1.gameboard.placeShip("a", 1, "hor", 5);
-        gameController.player1.gameboard.placeShip("b", 7, "ver", 4);
-        gameController.player1.gameboard.placeShip("j", 5, "hor", 3);
-        gameController.player1.gameboard.placeShip("c", 10, "ver", 3);
-        gameController.player1.gameboard.placeShip("a", 7, "hor", 2);
+        gameController.placeRandomShips(gameController.player1.gameboard);
 
-        gameController.player2.gameboard.placeShip("a", 5, "hor", 5);
-        gameController.player2.gameboard.placeShip("f", 7, "ver", 4);
-        gameController.player2.gameboard.placeShip("j", 2, "hor", 3);
-        gameController.player2.gameboard.placeShip("c", 4, "ver", 3);
-        gameController.player2.gameboard.placeShip("b", 2, "hor", 2);
+        gameController.placeRandomShips(gameController.player2.gameboard);
 
         renderShips(gameController.player1.gameboard.board, "P1");
+        // renderShips(gameController.player2.gameboard.board, "P2");
     },
 
     changePlayerTurn: () => {
@@ -60,7 +53,7 @@ export const gameController = {
 
     playComputersTurn: () => {
         if (!gameController.player2sTurn) return;
-        let allAttacks = getAllAttacksArray();
+        let allAttacks = getRandomCordsArr();
         for (const attack of gameController.player1.gameboard.allAttacks) {
             delete allAttacks[attack];
         }
@@ -133,6 +126,28 @@ export const gameController = {
         player2.textContent = name2;
     },
 
+    placeRandomShips: (gameboard) => {
+        let shipArr = [
+            [null, 5],
+            [null, 4],
+            [null, 3],
+            [null, 3],
+            [null, 2],
+        ];
+
+        shipArr.forEach((arr) => {
+            while (arr[0] === null) {
+                let randomUnits = getRandomUnits();
+                arr[0] = gameboard.placeShip(
+                    randomUnits[0],
+                    randomUnits[1],
+                    randomUnits[2],
+                    arr[1],
+                );
+            }
+        });
+    },
+
     gameOver: (playerName) => {
         gameController.player1sTurn = false;
         gameController.player2sTurn = false;
@@ -141,16 +156,33 @@ export const gameController = {
     },
 };
 
-function getAllAttacksArray() {
-    let allAttacks = {};
+function getRandomCordsArr() {
+    let allCords = {};
     let letterColumn = "abcdefghij".split("");
     let numberRow = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     for (const letter of letterColumn) {
         const letterCopy = letter;
 
         for (const num of numberRow) {
-            allAttacks[letterCopy + num] = letterCopy + num;
+            allCords[letterCopy + num] = letterCopy + num;
         }
     }
-    return allAttacks;
+    return allCords;
+}
+
+function getRandomUnits() {
+    let randomCordsArr = getRandomCordsArr();
+    let randomCords =
+        randomCordsArr[
+            Object.keys(randomCordsArr)[
+                Math.floor(Math.random() * Object.keys(randomCordsArr).length)
+            ]
+        ];
+    let dirArr = ["ver", "hor"];
+
+    let randomDir = dirArr[Math.floor(Math.random() * dirArr.length)];
+    let char = randomCords[0];
+    let num = +randomCords.slice(1);
+
+    return [char, num, randomDir];
 }
