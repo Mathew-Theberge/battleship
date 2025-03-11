@@ -26,6 +26,11 @@ export const gameController = {
         gameController.player1 = new Player("player");
         gameController.player2 = new Player("computer");
 
+        gameController.setPlayerNames(
+            gameController.player1.name,
+            gameController.player2.name,
+        );
+
         gameController.player1.gameboard.placeShip("a", 1, "hor", 5);
         gameController.player1.gameboard.placeShip("b", 7, "ver", 4);
         gameController.player1.gameboard.placeShip("j", 5, "hor", 3);
@@ -85,6 +90,13 @@ export const gameController = {
                 gameController.playComputersTurn();
             }
         }
+    },
+
+    setPlayerNames: (name1, name2) => {
+        const player1 = document.querySelector("#player1");
+        const player2 = document.querySelector("#player2");
+        player1.textContent = name1;
+        player2.textContent = name2;
     },
 };
 
