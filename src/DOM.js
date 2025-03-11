@@ -24,8 +24,11 @@ export function createGameboard(player) {
                 row.append(numTile);
             } else {
                 const tile = document.createElement("div");
-                tile.classList.add("tile");
-                tile.classList.add(`${letterColumn[i - 1]}${j + 1}-${player}`);
+                tile.classList.add(
+                    `${letterColumn[i - 1]}${j + 1}-${player}`,
+                    "tile",
+                    `${player}`,
+                );
                 row.append(tile);
             }
         }
