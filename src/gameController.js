@@ -59,6 +59,7 @@ export const gameController = {
     },
 
     playComputersTurn: () => {
+        if (!gameController.player2sTurn) return;
         let allAttacks = getAllAttacksArray();
         for (const attack of gameController.player1.gameboard.allAttacks) {
             delete allAttacks[attack];
@@ -72,7 +73,19 @@ export const gameController = {
             ];
         let char = attack[0];
         let num = attack.slice(1);
-        gameController.player1.gameboard.receiveAttack(char, num);
+        let ValueOfAttack = gameController.player1.gameboard.receiveAttack(
+            char,
+            num,
+        );
+        if (ValueOfAttack instanceof Ship) {
+            gameController.shipSunk(
+                gameController.player1.gameboard,
+                "P1",
+                ValueOfAttack,
+                "Computer has sunk your ship",
+                gameController.player2.name,
+            );
+        }
         renderAttacks(gameController.player1.gameboard.board, "P1");
         gameController.changePlayerTurn();
     },
@@ -89,6 +102,9 @@ export const gameController = {
                 gameController.shipSunk(
                     gameController.player2.gameboard,
                     attack,
+                    "P2",
+                    "Enemy Ship Sunk",
+                    gameController.player1.name,
                 );
             }
             if (attack === "already been attacked") {
@@ -100,12 +116,13 @@ export const gameController = {
         }
     },
 
-    shipSunk: (gameboard, ship) => {
+    shipSunk: (gameboard, ship, playerTag, msg, playerName) => {
         if (gameboard.areAllShipsSunk()) {
-            gameController.gameOver();
+            renderSunkShips(gameboard.board, playerTag, ship);
+            gameController.gameOver(playerName);
         } else {
-            updateMsgHeader("Enemy Ship Sunk");
-            renderSunkShips(gameboard.board, "P2", ship);
+            updateMsgHeader(msg);
+            renderSunkShips(gameboard.board, playerTag, ship);
         }
     },
 
@@ -114,6 +131,13 @@ export const gameController = {
         const player2 = document.querySelector("#player2");
         player1.textContent = name1;
         player2.textContent = name2;
+    },
+
+    gameOver: (playerName) => {
+        gameController.player1sTurn = false;
+        gameController.player2sTurn = false;
+
+        updateMsgHeader(`${playerName} Has won`);
     },
 };
 
