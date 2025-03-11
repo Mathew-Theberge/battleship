@@ -18,6 +18,8 @@
         sans-serif;
 }
 
+/* basic layout */
+
 .tile {
     width: 35px;
     height: 35px;
@@ -74,4 +76,8 @@
 
 .hitLogMsg {
     color: red;
+}
+
+#msgHeader {
+    height: 40px;
 }

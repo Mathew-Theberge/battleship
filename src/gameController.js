@@ -5,9 +5,11 @@ import {
     renderPlayComputerUI,
     renderShips,
     renderAttackLog,
+    updateMsgHeader,
+    renderSunkShips,
 } from "./DOM.js";
 
-import { Player, receiveAttack } from "./app.js";
+import { Player, receiveAttack, Ship } from "./app.js";
 
 export const gameController = {
     player1sTurn: true,
@@ -83,12 +85,27 @@ export const gameController = {
             );
             renderAttacks(gameController.player2.gameboard.board, "P2");
             renderAttackLog(gameController.player2.gameboard);
+            if (attack instanceof Ship) {
+                gameController.shipSunk(
+                    gameController.player2.gameboard,
+                    attack,
+                );
+            }
             if (attack === "already been attacked") {
                 alert("already been attacked");
             } else {
                 gameController.changePlayerTurn();
                 gameController.playComputersTurn();
             }
+        }
+    },
+
+    shipSunk: (gameboard, ship) => {
+        if (gameboard.areAllShipsSunk()) {
+            gameController.gameOver();
+        } else {
+            updateMsgHeader("Enemy Ship Sunk");
+            renderSunkShips(gameboard.board, "P2", ship);
         }
     },
 

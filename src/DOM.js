@@ -61,17 +61,32 @@ export function renderShips(board, player) {
     }
 }
 
+export function renderSunkShips(board, player, ship) {
+    for (const row of board) {
+        const rowCopy = row;
+        for (let i = 0; i < rowCopy[1].length; i++) {
+            if (rowCopy[1][i][1] === ship) {
+                const char = rowCopy[0];
+                const tile = document.querySelector(
+                    `.${char.toUpperCase()}${i}-${player}`,
+                );
+                tile.classList.add("ship");
+            }
+        }
+    }
+}
+
 export function renderAttacks(board, player) {
     for (const row of board) {
         const rowCopy = row;
         for (let i = 0; i < rowCopy[1].length; i++) {
-            if (rowCopy[1][i] === "miss") {
+            if (rowCopy[1][i][0] === "miss") {
                 const char = rowCopy[0];
                 const tile = document.querySelector(
                     `.${char.toUpperCase()}${i}-${player}`,
                 );
                 tile.classList.add("miss");
-            } else if (rowCopy[1][i] === "hit") {
+            } else if (rowCopy[1][i][0] === "hit") {
                 const char = rowCopy[0];
                 const tile = document.querySelector(
                     `.${char.toUpperCase()}${i}-${player}`,
@@ -93,6 +108,11 @@ export function renderAttackLog(enemysBoard) {
     });
 }
 
+export function updateMsgHeader(str) {
+    const msgHeader = document.querySelector("#msgHeader");
+    msgHeader.textContent = str;
+}
+
 export function renderStartScreenUI() {
     const button = document.createElement("button");
     button.id = "playComputer";
@@ -103,6 +123,7 @@ export function renderStartScreenUI() {
 export function renderPlayComputerUI() {
     document.body.replaceChildren();
     const header = document.createElement("header");
+    const msgHeader = document.createElement("div");
     const section = document.createElement("section");
     const shipContainer = document.createElement("div");
     const boardContainer = document.createElement("div");
@@ -112,6 +133,7 @@ export function renderPlayComputerUI() {
     const player2 = document.createElement("div");
     const footer = document.createElement("footer");
 
+    msgHeader.id = "msgHeader";
     section.id = "mainGame";
     shipContainer.id = "shipContainer";
     boardContainer.classList.add("boardContainer");
@@ -120,7 +142,7 @@ export function renderPlayComputerUI() {
     board2.id = "board2";
     player2.id = "player2";
     header.textContent = "BattleShip";
-    document.body.append(header, section, footer);
+    document.body.append(header, msgHeader, section, footer);
     section.append(shipContainer, boardContainer);
     boardContainer.append(board1, board2);
     board1.append(player1);

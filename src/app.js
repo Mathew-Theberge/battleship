@@ -1,4 +1,5 @@
 import { isBrowser } from "browser-or-node";
+import { renderSunkShips } from "./DOM";
 
 export class Ship {
     constructor(length) {
@@ -113,21 +114,22 @@ export class Gameboard {
         if (this.allAttacks.includes(char + num)) {
             return "already been attacked";
         }
+        const ship = this.board.get(char)[num];
         if (this.board.get(char)[num] === 0) {
             this.allAttacks.push(char + num);
             this.attackLog.push([char + num, "miss"]);
-            this.board.get(char)[num] = "miss";
+            this.board.get(char)[num] = ["miss", ship];
             return "miss";
         }
         if (this.board.get(char)[num] instanceof Ship) {
             this.allAttacks.push(char + num);
             this.attackLog.push([char + num, "hit"]);
             this.board.get(char)[num].hit();
-            if (this.board.get(char)[num].isSunk()) {
-                this.board.get(char)[num] = "hit";
-                return "sunk";
+            if (ship.isSunk()) {
+                this.board.get(char)[num] = ["hit", ship];
+                return ship;
             } else {
-                this.board.get(char)[num] = "hit";
+                this.board.get(char)[num] = ["hit", ship];
                 return "hit";
             }
         }

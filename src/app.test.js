@@ -62,7 +62,7 @@ describe("gameBoard Class", () => {
             gameboard.receiveAttack("b", 2);
             gameboard.receiveAttack("b", 3);
             expect(gameboard.receiveAttack("b", 5)).toBe("hit");
-            expect(gameboard.receiveAttack("b", 6)).toBe("sunk");
+            expect(gameboard.receiveAttack("b", 6)).toBeInstanceOf(Ship);
         });
 
         test("attack same spot", () => {
