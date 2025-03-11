@@ -110,7 +110,6 @@ export class Gameboard {
     }
 
     receiveAttack(char, num) {
-        console.log(this.missedAttacks);
         if (this.allAttacks.includes(char + num)) {
             return "already been attacked";
         }
