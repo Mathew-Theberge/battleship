@@ -1,6 +1,11 @@
 import "./style.css";
 import { Gameboard, Player, Ship } from "./app.js";
-import { createGameboard, renderGameboard } from "./DOM.js";
+import {
+    createGameboard,
+    renderGameboard,
+    renderShips,
+    updateMsgHeader,
+} from "./DOM.js";
 import { gameController } from "./gameController.js";
 
 const P1 = createGameboard("P1");
@@ -11,9 +16,10 @@ renderGameboard(P2, "P2");
 
 const playComputerBtn = document.querySelector("#computerBtn");
 
-playComputerBtn.addEventListener(
-    "click",
-    () => {
+playComputerBtn.addEventListener("click", () => {
+    if (gameController.player1.gameboard.isBoardEmpty()) {
+        updateMsgHeader("Must place your ships before starting");
+    } else {
         gameController.startComputerGame();
 
         const enemyTiles = document.querySelectorAll(".P2");
@@ -30,6 +36,10 @@ playComputerBtn.addEventListener(
                 gameController.playPlayersTurn(char, num);
             });
         });
-    },
-    { once: true },
-);
+    }
+});
+
+const randomizePlayer1ShipsBtn = document.querySelector("#player1RandomBtn");
+randomizePlayer1ShipsBtn.addEventListener("click", () => {
+    gameController.setRandomShipBoard(gameController.player1.gameboard, "P1");
+});

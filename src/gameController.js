@@ -14,23 +14,19 @@ import { Player, receiveAttack, Ship } from "./app.js";
 export const gameController = {
     player1sTurn: true,
     player2sTurn: false,
-    player1: null,
-    player2: null,
+    player1: new Player("Player 1"),
+    player2: new Player("Player 2"),
 
     startComputerGame: () => {
         gameController.setPlayerNames(true);
 
         renderPlayComputerUI();
 
-        gameController.player1 = new Player("player");
         gameController.player2 = new Player("computer");
-
-        gameController.placeRandomShips(gameController.player1.gameboard);
 
         gameController.placeRandomShips(gameController.player2.gameboard);
 
         renderShips(gameController.player1.gameboard.board, "P1");
-        // renderShips(gameController.player2.gameboard.board, "P2");
     },
 
     changePlayerTurn: () => {
@@ -153,6 +149,12 @@ export const gameController = {
                 );
             }
         });
+    },
+
+    setRandomShipBoard(gameboard, player) {
+        gameboard.clearBoard();
+        gameController.placeRandomShips(gameboard);
+        renderShips(gameboard.board, player);
     },
 
     gameOver: (playerName) => {

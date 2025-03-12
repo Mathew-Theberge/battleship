@@ -84,6 +84,19 @@ export class Gameboard {
         }
     }
 
+    clearBoard() {
+        this.board = this.#createBoard();
+    }
+
+    isBoardEmpty() {
+        for (const row of this.board) {
+            for (const tile of row[1]) {
+                if (tile !== 0) return false;
+            }
+        }
+        return true;
+    }
+
     placeShip(char, num, dir, shipLen) {
         if (dir === "ver") {
             const results = this.#isPlacementValid(char, num, dir, shipLen);

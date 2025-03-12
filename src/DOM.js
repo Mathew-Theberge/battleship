@@ -56,6 +56,14 @@ export function renderShips(board, player) {
                     `.${char.toUpperCase()}${i}-${player}`,
                 );
                 tile.classList.add("ship");
+                // this is so old ship classes get removed when
+                // ships are randomized or have to be changed in any way
+            } else if (i > 0) {
+                const char = rowCopy[0];
+                const tile = document.querySelector(
+                    `.${char.toUpperCase()}${i}-${player}`,
+                );
+                tile.classList.remove("ship");
             }
         }
     }
@@ -120,29 +128,4 @@ export function renderPlayComputerUI() {
     controls.forEach((control) => control.remove());
     const buttonFooter = document.querySelector("#buttonFooter");
     buttonFooter.remove();
-    // document.body.replaceChildren();
-    // const header = document.createElement("header");
-    // const msgHeader = document.createElement("div");
-    // const section = document.createElement("section");
-    // const shipContainer = document.createElement("div");
-    // const boardContainer = document.createElement("div");
-    // const board1 = document.createElement("div");
-    // const player1 = document.createElement("div");
-    // const board2 = document.createElement("div");
-    // const player2 = document.createElement("div");
-    // const footer = document.createElement("footer");
-    // msgHeader.id = "msgHeader";
-    // section.id = "mainGame";
-    // shipContainer.id = "shipContainer";
-    // boardContainer.classList.add("boardContainer");
-    // board1.id = "board1";
-    // player1.id = "player1";
-    // board2.id = "board2";
-    // player2.id = "player2";
-    // header.textContent = "BattleShip";
-    // document.body.append(header, msgHeader, section, footer);
-    // section.append(shipContainer, boardContainer);
-    // boardContainer.append(board1, board2);
-    // board1.append(player1);
-    // board2.append(player2);
 }
