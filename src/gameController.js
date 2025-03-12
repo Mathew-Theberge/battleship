@@ -29,7 +29,6 @@ export const gameController = {
         gameController.placeRandomShips(gameController.player2.gameboard);
 
         renderShips(gameController.player1.gameboard.board, "P1");
-        renderShips(gameController.player2.gameboard.board, "P2");
     },
 
     changePlayerTurn: () => {
@@ -65,13 +64,14 @@ export const gameController = {
         setTimeout(
             () => {
                 if (ValueOfAttack instanceof Ship) {
+                    updatePlayer2Log(
+                        `Computer Sunk Your Ship on ${char + num}!`,
+                    );
                     gameController.shipSunk(
                         gameController.player1.gameboard,
                         "P1",
                         ValueOfAttack,
                         "Computer",
-                    );
-                    updatePlayer2Log(
                         `Computer Sunk Your Ship on ${char + num}!`,
                     );
                 }
@@ -103,6 +103,7 @@ export const gameController = {
                     attack,
                     "P2",
                     "Player",
+                    `Player Sunk Enemy Ship on ${char + num}!`,
                 );
             }
             if (attack === "hit") {
@@ -120,10 +121,10 @@ export const gameController = {
         }
     },
 
-    shipSunk: (gameboard, ship, playerTag, playerName) => {
+    shipSunk: (gameboard, ship, playerTag, playerName, finalMsg) => {
         if (gameboard.areAllShipsSunk()) {
             renderSunkShips(gameboard.board, playerTag, ship);
-            gameController.gameOver(playerName);
+            gameController.gameOver(playerName, finalMsg);
         } else {
             renderSunkShips(gameboard.board, playerTag, ship);
         }
@@ -179,12 +180,12 @@ export const gameController = {
         renderShips(gameboard.board, player);
     },
 
-    gameOver: (playerName) => {
+    gameOver: (playerName, finalMsg) => {
         gameController.player1sTurn = false;
         gameController.player2sTurn = false;
 
         updatePlayer1Log(`${playerName} Has won`);
-        updatePlayer2Log("");
+        updatePlayer2Log(finalMsg);
     },
 };
 
