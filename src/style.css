@@ -20,17 +20,28 @@
 
 /* basic layout */
 
+body {
+    min-height: 100svh;
+    background-color: rgb(120, 182, 252);
+    /* background-image: url(./images/water.jpg); */
+    background-size: contain;
+    background-repeat: round;
+    backdrop-filter: blur(60px);
+}
+
 .tile {
-    width: 50px;
-    height: 50px;
-    border: 1px solid black;
+    width: 45px;
+    height: 45px;
+    border: 1px solid rgba(255, 255, 255, 0.589);
+    margin: 1px;
+    background-color: rgba(97, 137, 224, 0.089);
 }
 
 .letterTile,
 .numberTile {
     display: flex;
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
     align-items: center;
     justify-content: end;
     font-size: 1.25rem;
@@ -76,7 +87,7 @@
 }
 
 .hitLogMsg {
-    color: red;
+    color: rgb(255, 0, 0);
 }
 
 #msgHeader {
@@ -94,7 +105,6 @@ body #startScreen {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 32px;
 }
 
 h1 {
@@ -103,10 +113,27 @@ h1 {
 
 input {
     width: 200px;
+    height: 37px;
+    margin-top: 16px;
+    padding: 7px;
+    font-size: 1rem;
+    border-radius: 999px;
+    border: none;
+    outline: none;
+    padding-left: 12px;
+    color: white;
+    font-weight: 700;
+    background-color: rgba(0, 0, 0, 0.185);
+}
+
+input::placeholder {
+    color: rgba(255, 255, 255, 0.555);
 }
 
 .controls {
     align-self: center;
+    display: flex;
+    flex-direction: column;
 }
 
 #player1Section,
@@ -118,7 +145,8 @@ input {
     display: flex;
     flex-direction: column;
     align-items: end;
-    width: 525px;
+    width: 495px;
+    margin: 0 2rem;
 }
 .boardContainer {
     display: flex;
@@ -141,9 +169,54 @@ input {
 }
 
 #buttonFooter {
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    gap: 16px;
+}
+
+#buttonFooter > span {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.name {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-top: 16px;
 }
 
 footer {
     text-align: center;
+    border-top: rgb(0, 0, 0) 2px solid;
+    border-bottom: rgb(0, 0, 0) 2px solid;
+    margin-top: 2rem;
+    font-size: 4rem;
+    padding: 8px;
+    font-weight: 500;
+    background-color: rgba(0, 0, 0, 0.308);
+}
+
+/* main styling */
+
+h1 img {
+    width: 350px;
+}
+
+h1 {
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid black;
+    background-color: rgba(0, 0, 0, 0.233);
+    height: 100px;
+}
+
+button {
+    padding: 8px 24px;
+    border-radius: 999px;
+    border: 1px solid black;
+    outline: none;
+    font-size: 1.5rem;
+    background-color: rgba(255, 255, 255, 0.233);
 }

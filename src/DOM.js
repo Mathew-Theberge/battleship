@@ -108,11 +108,16 @@ export function renderAttacks(board, player) {
 export function renderAttackLog(enemysBoard) {
     const log = document.querySelector("footer");
     log.replaceChildren();
+    let i = 0;
     enemysBoard.attackLog.forEach((arr) => {
+        if (i > 8) {
+            log.firstChild.remove();
+        }
         const cords = document.createElement("span");
         if (arr[1] === "hit") cords.classList.add("hitLogMsg");
         cords.textContent = `${arr[0]}, `;
         log.append(cords);
+        i++;
     });
 }
 
@@ -138,4 +143,7 @@ export function renderPlayComputerUI() {
     controls.forEach((control) => control.remove());
     const buttonFooter = document.querySelector("#buttonFooter");
     buttonFooter.remove();
+    const footer = document.createElement("footer");
+    footer.textContent = "Attack Log";
+    document.body.append(footer);
 }
