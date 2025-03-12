@@ -81,3 +81,38 @@
 #msgHeader {
     height: 40px;
 }
+
+/* start screen ui layout */
+
+body #startScreen {
+    display: flex;
+    flex-direction: column;
+}
+
+.flexRow {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+}
+
+h1 {
+    text-align: center;
+}
+
+input {
+    grid-column: 1/3;
+}
+
+.controls {
+    align-self: center;
+}
+
+.name {
+    grid-column: 1/3;
+}
+
+#player1,
+#player2 {
+    display: grid;
+    grid-template-columns: auto 1fr;
+}

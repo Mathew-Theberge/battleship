@@ -18,20 +18,12 @@ export const gameController = {
     player2: null,
 
     startComputerGame: () => {
-        renderPlayComputerUI();
-        const P1 = createGameboard("P1");
-        const P2 = createGameboard("P2");
+        gameController.setPlayerNames(true);
 
-        renderGameboard(P1, "P1");
-        renderGameboard(P2, "P2");
+        renderPlayComputerUI();
 
         gameController.player1 = new Player("player");
         gameController.player2 = new Player("computer");
-
-        gameController.setPlayerNames(
-            gameController.player1.name,
-            gameController.player2.name,
-        );
 
         gameController.placeRandomShips(gameController.player1.gameboard);
 
@@ -119,11 +111,26 @@ export const gameController = {
         }
     },
 
-    setPlayerNames: (name1, name2) => {
+    setPlayerNames: (playingComputer = false) => {
+        const player1Input = document.querySelector("#player1Input");
+        const player2Input = document.querySelector("#player2Input");
         const player1 = document.querySelector("#player1");
         const player2 = document.querySelector("#player2");
-        player1.textContent = name1;
-        player2.textContent = name2;
+        const player1Name = document.createElement("div");
+        const player2Name = document.createElement("div");
+        player1Name.classList.add("name");
+        player2Name.classList.add("name");
+        if (playingComputer) {
+            player1Name.textContent = "Player";
+            player2Name.textContent = "Computer";
+            player1.insertBefore(player1Name, player1.firstChild);
+            player2.insertBefore(player2Name, player2.firstChild);
+        } else {
+            player1Name.textContent = player1Input.value;
+            player2Name.textContent = player2Input.value;
+            player1.insertBefore(player1Name, player1.firstChild);
+            player2.insertBefore(player2Name, player2.firstChild);
+        }
     },
 
     placeRandomShips: (gameboard) => {

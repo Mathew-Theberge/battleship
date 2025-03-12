@@ -1,10 +1,15 @@
 import "./style.css";
 import { Gameboard, Player, Ship } from "./app.js";
-import { renderAttackLog, renderAttacks, renderStartScreenUI } from "./DOM.js";
+import { createGameboard, renderGameboard } from "./DOM.js";
 import { gameController } from "./gameController.js";
 
-renderStartScreenUI();
-const playComputerBtn = document.querySelector("#playComputer");
+const P1 = createGameboard("P1");
+const P2 = createGameboard("P2");
+
+renderGameboard(P1, "P1");
+renderGameboard(P2, "P2");
+
+const playComputerBtn = document.querySelector("#computerBtn");
 
 playComputerBtn.addEventListener(
     "click",
