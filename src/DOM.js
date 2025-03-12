@@ -121,6 +121,16 @@ export function updateMsgHeader(str) {
     msgHeader.textContent = str;
 }
 
+export function updatePlayer1Log(str) {
+    const player1Log = document.querySelector("#player1Log");
+    player1Log.textContent = str;
+}
+
+export function updatePlayer2Log(str) {
+    const player2Log = document.querySelector("#player2Log");
+    player2Log.textContent = str;
+}
+
 export function renderPlayComputerUI() {
     const inputs = document.querySelectorAll("input");
     inputs.forEach((input) => input.remove());

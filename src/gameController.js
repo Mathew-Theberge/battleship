@@ -7,6 +7,8 @@ import {
     renderAttackLog,
     updateMsgHeader,
     renderSunkShips,
+    updatePlayer1Log,
+    updatePlayer2Log,
 } from "./DOM.js";
 
 import { Player, receiveAttack, Ship } from "./app.js";
@@ -27,6 +29,7 @@ export const gameController = {
         gameController.placeRandomShips(gameController.player2.gameboard);
 
         renderShips(gameController.player1.gameboard.board, "P1");
+        renderShips(gameController.player2.gameboard.board, "P2");
     },
 
     changePlayerTurn: () => {
@@ -58,17 +61,31 @@ export const gameController = {
             char,
             num,
         );
-        if (ValueOfAttack instanceof Ship) {
-            gameController.shipSunk(
-                gameController.player1.gameboard,
-                "P1",
-                ValueOfAttack,
-                "Computer has sunk your ship",
-                gameController.player2.name,
-            );
-        }
-        renderAttacks(gameController.player1.gameboard.board, "P1");
-        gameController.changePlayerTurn();
+        updatePlayer2Log("Computer is attacking");
+        setTimeout(
+            () => {
+                if (ValueOfAttack instanceof Ship) {
+                    gameController.shipSunk(
+                        gameController.player1.gameboard,
+                        "P1",
+                        ValueOfAttack,
+                        "Computer",
+                    );
+                    updatePlayer2Log(
+                        `Computer Sunk Your Ship on ${char + num}!`,
+                    );
+                }
+                if (ValueOfAttack === "miss") {
+                    updatePlayer2Log(`Computer Missed at ${char + num}`);
+                }
+                if (ValueOfAttack === "hit") {
+                    updatePlayer2Log(`Computer Hit at ${char + num}`);
+                }
+                renderAttacks(gameController.player1.gameboard.board, "P1");
+                gameController.changePlayerTurn();
+            },
+            Math.random() * 1000 + 500,
+        );
     },
 
     playPlayersTurn: (char, num) => {
@@ -80,13 +97,19 @@ export const gameController = {
             renderAttacks(gameController.player2.gameboard.board, "P2");
             renderAttackLog(gameController.player2.gameboard);
             if (attack instanceof Ship) {
+                updatePlayer1Log(`Player Sunk Enemy Ship on ${char + num}!`);
                 gameController.shipSunk(
                     gameController.player2.gameboard,
                     attack,
                     "P2",
-                    "Enemy Ship Sunk",
-                    gameController.player1.name,
+                    "Player",
                 );
+            }
+            if (attack === "hit") {
+                updatePlayer1Log(`Player Hit! on ${char + num}`);
+            }
+            if (attack === "miss") {
+                updatePlayer1Log(`Player Missed on ${char + num}`);
             }
             if (attack === "already been attacked") {
                 alert("already been attacked");
@@ -97,12 +120,11 @@ export const gameController = {
         }
     },
 
-    shipSunk: (gameboard, ship, playerTag, msg, playerName) => {
+    shipSunk: (gameboard, ship, playerTag, playerName) => {
         if (gameboard.areAllShipsSunk()) {
             renderSunkShips(gameboard.board, playerTag, ship);
             gameController.gameOver(playerName);
         } else {
-            updateMsgHeader(msg);
             renderSunkShips(gameboard.board, playerTag, ship);
         }
     },
@@ -161,7 +183,8 @@ export const gameController = {
         gameController.player1sTurn = false;
         gameController.player2sTurn = false;
 
-        updateMsgHeader(`${playerName} Has won`);
+        updatePlayer1Log(`${playerName} Has won`);
+        updatePlayer2Log("");
     },
 };
 
