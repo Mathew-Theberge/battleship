@@ -6,52 +6,47 @@
         <title>BattleShip</title>
     </head>
     <body id="startScreen">
-        <h1>Play Game</h1>
-        <div id="msgHeader"></div>
+        <h1>BattleShip</h1>
         <form action="#"></form>
         <div class="flexRow" id="mainContainer">
-            <div id="player1">
-                <input type="text" id="player1Input" placeholder="Player1" />
+            <div id="player1Section">
                 <div id="player1Controls" class="controls">
-                    <h3>Ships</h3>
-                    <div class="Player1Ships" id="ship1-P1">Ship1</div>
-                    <div class="Player1Ships" id="ship2-P1">Ship2</div>
-                    <div class="Player1Ships" id="ship3-P1">Ship3</div>
-                    <div class="Player1Ships" id="ship4-P1">Ship4</div>
-                    <div class="Player1Ships" id="ship5-P1">Ship5</div>
-                    <button id="player1RotateBtn">Rotate</button>
-                    <br />
                     <button id="player1RandomBtn">Randomize Ships</button>
+                    <br />
+                    <button id="hideBoard1Btn">Hide Board</button>
                 </div>
-                <div id="board1" class="board"></div>
+                <div id="board1" class="boardContainer">
+                    <input
+                        type="text"
+                        id="player1Input"
+                        placeholder="Player1"
+                    />
+                </div>
             </div>
             <div id="log">
                 <div id="player1Log"></div>
                 <div id="player2Log"></div>
             </div>
-            <div id="player2">
-                <input type="text" id="player2Input" placeholder="Player2" />
-                <div id="player2Controls" class="controls">
-                    <h3>Ships</h3>
-                    <div class="Player2Ships" id="ship1-P2">Ship1</div>
-                    <div class="Player2Ships" id="ship2-P2">Ship2</div>
-                    <div class="Player2Ships" id="ship3-P2">Ship3</div>
-                    <div class="Player2Ships" id="ship4-P2">Ship4</div>
-                    <div class="Player2Ships" id="ship5-P2">Ship5</div>
-                    <button id="player2RotateBtn">Rotate</button>
-                    <br />
-                    <button id="player2RandomBtn">Randomize Ships</button>
+            <div id="player2Section">
+                <div id="board2" class="boardContainer">
+                    <input
+                        type="text"
+                        id="player2Input"
+                        placeholder="Player2"
+                    />
                 </div>
-                <div id="board2" class="board"></div>
+                <div id="player2Controls" class="controls">
+                    <button id="player2RandomBtn">Randomize Ships</button>
+                    <br />
+                    <button id="hideBoard2Btn">Hide Board</button>
+                </div>
             </div>
         </div>
-        <div class="flexRow" id="startBtns">
-            <footer></footer>
-            <div id="buttonFooter">
-                <button id="startBtn">Start Game</button>
-                <span>Or</span>
-                <button id="computerBtn">Play Computer</button>
-            </div>
+        <footer></footer>
+        <div id="buttonFooter">
+            <button id="startBtn">Start Game</button>
+            <span>Or</span>
+            <button id="computerBtn">Play Computer</button>
         </div>
     </body>
 </html>

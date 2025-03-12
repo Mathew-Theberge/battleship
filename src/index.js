@@ -5,6 +5,7 @@ import {
     renderGameboard,
     renderShips,
     updateMsgHeader,
+    updatePlayer1Log,
 } from "./DOM.js";
 import { gameController } from "./gameController.js";
 
@@ -18,7 +19,7 @@ const playComputerBtn = document.querySelector("#computerBtn");
 
 playComputerBtn.addEventListener("click", () => {
     if (gameController.player1.gameboard.isBoardEmpty()) {
-        updateMsgHeader("Must place your ships before starting");
+        updatePlayer1Log("Must place your ships before starting");
     } else {
         gameController.startComputerGame();
 

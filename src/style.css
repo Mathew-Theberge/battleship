@@ -44,6 +44,7 @@
 }
 
 .letterTile {
+    max-width: fit-content;
     margin-right: 8px;
 }
 
@@ -101,21 +102,28 @@ h1 {
 }
 
 input {
-    grid-column: 1/3;
+    width: 200px;
 }
 
 .controls {
     align-self: center;
 }
 
-.name {
-    grid-column: 1/3;
+#player1Section,
+#player2Section {
+    display: flex;
 }
 
-#player1,
-#player2 {
-    display: grid;
-    grid-template-columns: auto 1fr;
+.board {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    width: 525px;
+}
+.boardContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #log {
@@ -129,5 +137,13 @@ input {
 #player2Log {
     font-size: 2.5rem;
     font-weight: 500;
+    text-align: center;
+}
+
+#buttonFooter {
+    text-align: center;
+}
+
+footer {
     text-align: center;
 }

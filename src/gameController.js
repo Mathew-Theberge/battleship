@@ -65,14 +65,14 @@ export const gameController = {
             () => {
                 if (ValueOfAttack instanceof Ship) {
                     updatePlayer2Log(
-                        `Computer Sunk Your Ship on ${char + num}!`,
+                        `Computer Sunk Your Ship at ${char + num}!`,
                     );
                     gameController.shipSunk(
                         gameController.player1.gameboard,
                         "P1",
                         ValueOfAttack,
                         "Computer",
-                        `Computer Sunk Your Ship on ${char + num}!`,
+                        `Computer Sunk Your Ship at ${char + num}!`,
                     );
                 }
                 if (ValueOfAttack === "miss") {
@@ -97,20 +97,20 @@ export const gameController = {
             renderAttacks(gameController.player2.gameboard.board, "P2");
             renderAttackLog(gameController.player2.gameboard);
             if (attack instanceof Ship) {
-                updatePlayer1Log(`Player Sunk Enemy Ship on ${char + num}!`);
+                updatePlayer1Log(`Player Sunk Enemy Ship at ${char + num}!`);
                 gameController.shipSunk(
                     gameController.player2.gameboard,
                     attack,
                     "P2",
                     "Player",
-                    `Player Sunk Enemy Ship on ${char + num}!`,
+                    `Player Sunk Enemy Ship at ${char + num}!`,
                 );
             }
             if (attack === "hit") {
-                updatePlayer1Log(`Player Hit! on ${char + num}`);
+                updatePlayer1Log(`Player Hit! at ${char + num}`);
             }
             if (attack === "miss") {
-                updatePlayer1Log(`Player Missed on ${char + num}`);
+                updatePlayer1Log(`Player Missed at ${char + num}`);
             }
             if (attack === "already been attacked") {
                 alert("already been attacked");
@@ -133,8 +133,8 @@ export const gameController = {
     setPlayerNames: (playingComputer = false) => {
         const player1Input = document.querySelector("#player1Input");
         const player2Input = document.querySelector("#player2Input");
-        const player1 = document.querySelector("#player1");
-        const player2 = document.querySelector("#player2");
+        const board1 = document.querySelector("#board1");
+        const board2 = document.querySelector("#board2");
         const player1Name = document.createElement("div");
         const player2Name = document.createElement("div");
         player1Name.classList.add("name");
@@ -142,13 +142,13 @@ export const gameController = {
         if (playingComputer) {
             player1Name.textContent = "Player";
             player2Name.textContent = "Computer";
-            player1.insertBefore(player1Name, player1.firstChild);
-            player2.insertBefore(player2Name, player2.firstChild);
+            board1.insertBefore(player1Name, board1.firstChild);
+            board2.insertBefore(player2Name, board2.firstChild);
         } else {
             player1Name.textContent = player1Input.value;
             player2Name.textContent = player2Input.value;
-            player1.insertBefore(player1Name, player1.firstChild);
-            player2.insertBefore(player2Name, player2.firstChild);
+            board1.insertBefore(player1Name, board1.firstChild);
+            board2.insertBefore(player2Name, board2.firstChild);
         }
     },
 
