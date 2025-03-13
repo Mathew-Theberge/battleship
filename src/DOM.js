@@ -191,3 +191,13 @@ export function renderStartGameUI() {
     const buttonFooter = document.querySelector("#buttonFooter");
     buttonFooter.remove();
 }
+
+export function toggleHideBoard(board, player, btn) {
+    if (btn.textContent === "Hide Ships") {
+        hideShips(board, player);
+        btn.textContent = "Show Ships";
+    } else {
+        showAllShips(board, player);
+        btn.textContent = "Hide Ships";
+    }
+}

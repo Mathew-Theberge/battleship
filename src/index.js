@@ -7,6 +7,8 @@ import {
     updateMsgHeader,
     updatePlayer1Log,
     updatePlayer2Log,
+    toggleHideBoard,
+    showAllShips,
 } from "./DOM.js";
 import { gameController } from "./gameController.js";
 
@@ -50,10 +52,12 @@ const randomizePlayer2ShipsBtn = document.querySelector("#player2RandomBtn");
 
 randomizePlayer1ShipsBtn.addEventListener("click", () => {
     gameController.setRandomShipBoard(gameController.player1.gameboard, "P1");
+    showAllShips(gameController.player1.gameboard.board, "P1");
 });
 
 randomizePlayer2ShipsBtn.addEventListener("click", () => {
     gameController.setRandomShipBoard(gameController.player2.gameboard, "P2");
+    showAllShips(gameController.player2.gameboard.board, "P2");
 });
 
 const startBtn = document.querySelector("#startBtn");
@@ -97,4 +101,23 @@ startBtn.addEventListener("click", () => {
             });
         });
     }
+});
+
+const hideBoard1Btn = document.querySelector("#hideBoard1Btn");
+const hideBoard2Btn = document.querySelector("#hideBoard2Btn");
+
+hideBoard1Btn.addEventListener("click", () => {
+    toggleHideBoard(
+        gameController.player1.gameboard.board,
+        "P1",
+        hideBoard1Btn,
+    );
+});
+
+hideBoard2Btn.addEventListener("click", () => {
+    toggleHideBoard(
+        gameController.player2.gameboard.board,
+        "P2",
+        hideBoard2Btn,
+    );
 });
