@@ -152,11 +152,6 @@ export function renderAttackLog(enemysBoard) {
     });
 }
 
-export function updateMsgHeader(str) {
-    const msgHeader = document.querySelector("#msgHeader");
-    msgHeader.textContent = str;
-}
-
 export function updatePlayer1Log(str) {
     const player1Log = document.querySelector("#player1Log");
     player1Log.textContent = str;

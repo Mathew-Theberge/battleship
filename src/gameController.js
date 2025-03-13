@@ -24,6 +24,7 @@ export const gameController = {
     player2: new Player("Player 2"),
     player1Name: null,
     player2Name: null,
+    nextComputerAttack: null,
 
     startGame: () => {
         toggleTurnColor();
@@ -69,19 +70,50 @@ export const gameController = {
 
     playComputersTurn: () => {
         if (!gameController.player2sTurn) return;
+        let char;
+        let num;
         let allAttacks = getRandomCordsArr();
         for (const attack of gameController.player1.gameboard.allAttacks) {
             delete allAttacks[attack];
         }
+        if (gameController.nextComputerAttack !== null) {
+            char = gameController.nextComputerAttack[0];
+            num = gameController.nextComputerAttack[1];
+        } else if (Object.keys(allAttacks).length === 90) {
+            console.log("90");
+            let attack = gameController.guaranteedHit(
+                gameController.player1.gameboard.board,
+            );
+            char = attack[0];
+            num = attack[1];
+        } else if (Object.keys(allAttacks).length === 70) {
+            console.log("70");
+            let attack = gameController.guaranteedHit(
+                gameController.player1.gameboard.board,
+            );
+            char = attack[0];
+            num = attack[1];
+        } else if (Object.keys(allAttacks).length === 50) {
+            console.log("50");
+            let attack = gameController.guaranteedHit(
+                gameController.player1.gameboard.board,
+            );
+            char = attack[0];
+            num = attack[1];
+        } else {
+            console.log();
+            let attack =
+                allAttacks[
+                    Object.keys(allAttacks)[
+                        Math.floor(
+                            Math.random() * Object.keys(allAttacks).length,
+                        )
+                    ]
+                ];
+            char = attack[0];
+            num = attack.slice(1);
+        }
         // picks random attack cords from the remaining ones
-        let attack =
-            allAttacks[
-                Object.keys(allAttacks)[
-                    Math.floor(Math.random() * Object.keys(allAttacks).length)
-                ]
-            ];
-        let char = attack[0];
-        let num = attack.slice(1);
         let ValueOfAttack = gameController.player1.gameboard.receiveAttack(
             char,
             num,
@@ -89,7 +121,10 @@ export const gameController = {
         updatePlayer2Log("Computer is attacking");
         setTimeout(
             () => {
-                if (ValueOfAttack instanceof Ship) {
+                if (
+                    ValueOfAttack instanceof Ship &&
+                    !Array.isArray(ValueOfAttack)
+                ) {
                     updatePlayer2Log(
                         `Computer Sunk Your Ship at ${char + num}!`,
                     );
@@ -105,13 +140,66 @@ export const gameController = {
                     updatePlayer2Log(`Computer Missed at ${char + num}`);
                 }
                 if (ValueOfAttack === "hit") {
+                    console.log(gameController.nextComputerAttack);
                     updatePlayer2Log(`Computer Hit at ${char + num}`);
+                    gameController.setNextComputerAttack(
+                        char,
+                        num,
+                        gameController.player1.gameboard.board,
+                    );
                 }
                 renderAttacks(gameController.player1.gameboard.board, "P1");
                 gameController.changePlayerTurn();
             },
-            Math.random() * 2000 + 500,
+            // Math.random() * 2000 + 500,
         );
+    },
+
+    guaranteedHit: (board) => {
+        for (const row of board) {
+            const rowCopy = row;
+            for (let i = 0; i < rowCopy[1].length; i++) {
+                if (rowCopy[1][i] instanceof Ship) {
+                    return [rowCopy[0], i];
+                }
+            }
+        }
+    },
+
+    setNextComputerAttack: (char, num, board) => {
+        const letterArr = "abcdefghij".split("");
+        const currCharIndex = letterArr.findIndex((value) => {
+            return value === char;
+        });
+        let prevChar = letterArr[currCharIndex - 1];
+        let nextChar = letterArr[currCharIndex + 1];
+        let prevNum = +num - 1;
+        let nextNum = +num + 1;
+        if (prevChar !== undefined) {
+            if (board.get(prevChar)[num] instanceof Ship) {
+                gameController.nextComputerAttack = [prevChar, num];
+                return;
+            }
+        }
+        if (nextChar !== undefined) {
+            if (board.get(nextChar)[num] instanceof Ship) {
+                gameController.nextComputerAttack = [nextChar, num];
+                return;
+            }
+        }
+        if (nextNum < 11) {
+            if (board.get(char)[nextNum] instanceof Ship) {
+                gameController.nextComputerAttack = [char, nextNum];
+                return;
+            }
+        }
+        if ([prevNum > 0]) {
+            if (board.get(char)[prevNum] instanceof Ship) {
+                gameController.nextComputerAttack = [char, prevNum];
+                return;
+            }
+        }
+        gameController.nextComputerAttack = null;
     },
 
     playPlayersTurn: (char, num) => {
@@ -224,6 +312,7 @@ export const gameController = {
     },
 
     shipSunk: (gameboard, ship, playerTag, playerName, finalMsg) => {
+        gameController.nextComputerAttack = null;
         if (gameboard.areAllShipsSunk()) {
             renderSunkShips(gameboard.board, playerTag, ship);
             gameController.gameOver(playerName, finalMsg);

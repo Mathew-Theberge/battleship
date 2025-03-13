@@ -23,7 +23,7 @@
 body {
     min-height: 100svh;
     background-color: rgb(120, 182, 252);
-    /* background-image: url(./images/water.jpg); */
+    background-image: url(./images/water.jpg);
     background-size: contain;
     background-repeat: round;
     backdrop-filter: blur(60px);
@@ -34,7 +34,7 @@ body {
     height: 45px;
     border: 1px solid rgba(255, 255, 255, 0.589);
     margin: 1px;
-    background-color: rgba(97, 137, 224, 0.63);
+    background-color: rgba(93, 153, 194, 0.116);
 }
 
 .active {
@@ -78,7 +78,7 @@ body {
 }
 
 .hideShip {
-    background-color: rgba(97, 137, 224, 0.63);
+    background-color: rgba(97, 137, 224, 0);
 }
 
 .miss {
