@@ -86,6 +86,7 @@ export class Gameboard {
 
     clearBoard() {
         this.board = this.#createBoard();
+        this.#allShips = [];
     }
 
     isBoardEmpty() {
