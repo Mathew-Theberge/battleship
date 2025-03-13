@@ -79,6 +79,37 @@ export function renderSunkShips(board, player, ship) {
                     `.${char.toUpperCase()}${i}-${player}`,
                 );
                 tile.classList.add("ship");
+                tile.classList.remove("hideShip");
+            }
+        }
+    }
+}
+
+export function hideShips(board, player) {
+    for (const row of board) {
+        const rowCopy = row;
+        for (let i = 0; i < rowCopy[1].length; i++) {
+            if (rowCopy[1][i] instanceof Ship) {
+                const char = rowCopy[0];
+                const tile = document.querySelector(
+                    `.${char.toUpperCase()}${i}-${player}`,
+                );
+                tile.classList.add("hideShip");
+            }
+        }
+    }
+}
+
+export function showAllShips(board, player) {
+    for (const row of board) {
+        const rowCopy = row;
+        for (let i = 0; i < rowCopy[1].length; i++) {
+            if (rowCopy[1][i] instanceof Ship || rowCopy[1][i][0] === "hit") {
+                const char = rowCopy[0];
+                const tile = document.querySelector(
+                    `.${char.toUpperCase()}${i}-${player}`,
+                );
+                tile.classList.remove("hideShip");
             }
         }
     }
@@ -150,4 +181,13 @@ export function renderPlayComputerUI() {
     attackHistory.classList.add("attackHistory");
     attackHistoryDiv.textContent = "Your Attack History";
     footer.append(attackHistoryDiv, attackHistory);
+}
+
+export function renderStartGameUI() {
+    const inputs = document.querySelectorAll("input");
+    inputs.forEach((input) => input.remove());
+    const controls = document.querySelectorAll(".controls");
+    controls.forEach((control) => control.remove());
+    const buttonFooter = document.querySelector("#buttonFooter");
+    buttonFooter.remove();
 }

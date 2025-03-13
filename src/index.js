@@ -55,3 +55,46 @@ randomizePlayer1ShipsBtn.addEventListener("click", () => {
 randomizePlayer2ShipsBtn.addEventListener("click", () => {
     gameController.setRandomShipBoard(gameController.player2.gameboard, "P2");
 });
+
+const startBtn = document.querySelector("#startBtn");
+
+startBtn.addEventListener("click", () => {
+    if (
+        gameController.player1.gameboard.isBoardEmpty() ||
+        gameController.player2.gameboard.isBoardEmpty()
+    ) {
+        updatePlayer1Log("Place ships on both boards before starting");
+        updatePlayer2Log("");
+    } else {
+        gameController.startGame();
+
+        const player1Tiles = document.querySelectorAll(".P1");
+        const player2Tiles = document.querySelectorAll(".P2");
+
+        player2Tiles.forEach((tile) => {
+            // grabbing cords from each tile to use in receiveAttack func
+            let char = tile.getAttribute("class")[0].toLowerCase();
+            let num = tile.getAttribute("class").slice(1, 3);
+            if (num.includes("-")) {
+                num = num.slice(0, 1);
+            }
+
+            tile.addEventListener("click", () => {
+                gameController.playPlayerOnesTurn(char, num);
+            });
+        });
+
+        player1Tiles.forEach((tile) => {
+            // grabbing cords from each tile to use in receiveAttack func
+            let char = tile.getAttribute("class")[0].toLowerCase();
+            let num = tile.getAttribute("class").slice(1, 3);
+            if (num.includes("-")) {
+                num = num.slice(0, 1);
+            }
+
+            tile.addEventListener("click", () => {
+                gameController.playPlayerTwosTurn(char, num);
+            });
+        });
+    }
+});

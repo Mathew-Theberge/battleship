@@ -9,6 +9,9 @@ import {
     renderSunkShips,
     updatePlayer1Log,
     updatePlayer2Log,
+    renderStartGameUI,
+    hideShips,
+    showAllShips,
 } from "./DOM.js";
 
 import { Player, receiveAttack, Ship } from "./app.js";
@@ -18,6 +21,20 @@ export const gameController = {
     player2sTurn: false,
     player1: new Player("Player 1"),
     player2: new Player("Player 2"),
+    player1Name: null,
+    player2Name: null,
+
+    startGame: () => {
+        const names = gameController.setPlayerNames();
+        gameController.player1Name = names[0];
+        gameController.player2Name = names[1];
+        updatePlayer1Log("");
+        updatePlayer2Log("");
+
+        renderStartGameUI();
+        hideShips(gameController.player1.gameboard.board, "P1");
+        hideShips(gameController.player2.gameboard.board, "P2");
+    },
 
     startComputerGame: () => {
         updatePlayer1Log("Its Players Turn");
@@ -74,8 +91,8 @@ export const gameController = {
                     );
                     gameController.shipSunk(
                         gameController.player1.gameboard,
-                        "P1",
                         ValueOfAttack,
+                        "P1",
                         "Computer",
                         `Computer Sunk Your Ship at ${char + num}!`,
                     );
@@ -126,6 +143,82 @@ export const gameController = {
         }
     },
 
+    playPlayerOnesTurn: (char, num) => {
+        if (gameController.player1sTurn) {
+            const attack = gameController.player2.gameboard.receiveAttack(
+                char,
+                +num,
+            );
+            renderAttacks(gameController.player2.gameboard.board, "P2");
+            // renderAttackLog(gameController.player2.gameboard);
+            if (attack instanceof Ship) {
+                updatePlayer1Log(
+                    `${gameController.player1Name} Sunk Enemy Ship at ${char + num}!`,
+                );
+                gameController.shipSunk(
+                    gameController.player2.gameboard,
+                    attack,
+                    "P2",
+                    `${gameController.player1Name}`,
+                    `${gameController.player1Name} Sunk Enemy Ship at ${char + num}!`,
+                );
+            }
+            if (attack === "hit") {
+                updatePlayer1Log(
+                    `${gameController.player1Name} Hit! at ${char + num}`,
+                );
+            }
+            if (attack === "miss") {
+                updatePlayer1Log(
+                    `${gameController.player1Name} Missed at ${char + num}`,
+                );
+            }
+            if (attack === "already been attacked") {
+                alert("already been attacked");
+            } else {
+                gameController.changePlayerTurn();
+            }
+        }
+    },
+
+    playPlayerTwosTurn: (char, num) => {
+        if (gameController.player2sTurn) {
+            const attack = gameController.player1.gameboard.receiveAttack(
+                char,
+                +num,
+            );
+            renderAttacks(gameController.player1.gameboard.board, "P1");
+            // renderAttackLog(gameController.player2.gameboard);
+            if (attack instanceof Ship) {
+                updatePlayer1Log(
+                    `${gameController.player2Name} Sunk Enemy Ship at ${char + num}!`,
+                );
+                gameController.shipSunk(
+                    gameController.player1.gameboard,
+                    attack,
+                    "P1",
+                    `${gameController.player2Name}`,
+                    `${gameController.player2Name} Sunk Enemy Ship at ${char + num}!`,
+                );
+            }
+            if (attack === "hit") {
+                updatePlayer1Log(
+                    `${gameController.player2Name} Hit! at ${char + num}`,
+                );
+            }
+            if (attack === "miss") {
+                updatePlayer1Log(
+                    `${gameController.player2Name} Missed at ${char + num}`,
+                );
+            }
+            if (attack === "already been attacked") {
+                alert("already been attacked");
+            } else {
+                gameController.changePlayerTurn();
+            }
+        }
+    },
+
     shipSunk: (gameboard, ship, playerTag, playerName, finalMsg) => {
         if (gameboard.areAllShipsSunk()) {
             renderSunkShips(gameboard.board, playerTag, ship);
@@ -150,10 +243,17 @@ export const gameController = {
             board1.insertBefore(player1Name, board1.firstChild);
             board2.insertBefore(player2Name, board2.firstChild);
         } else {
+            if (player1Input.value === "") {
+                player1Input.value = "Player one";
+            }
+            if (player2Input.value === "") {
+                player2Input.value = "Player two";
+            }
             player1Name.textContent = player1Input.value;
             player2Name.textContent = player2Input.value;
             board1.insertBefore(player1Name, board1.firstChild);
             board2.insertBefore(player2Name, board2.firstChild);
+            return [player1Input.value, player2Input.value];
         }
     },
 
@@ -188,7 +288,8 @@ export const gameController = {
     gameOver: (playerName, finalMsg) => {
         gameController.player1sTurn = false;
         gameController.player2sTurn = false;
-
+        showAllShips(gameController.player1.gameboard.board, "P1");
+        showAllShips(gameController.player2.gameboard.board, "P2");
         updatePlayer1Log(`${playerName} Has won`);
         updatePlayer2Log(finalMsg);
     },
