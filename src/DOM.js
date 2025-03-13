@@ -201,3 +201,25 @@ export function toggleHideBoard(board, player, btn) {
         btn.textContent = "Hide Ships";
     }
 }
+
+export function toggleTurnColor(turn) {
+    if (turn === false) {
+        const P2 = document.querySelectorAll(".P2");
+        const P1 = document.querySelectorAll(".P1");
+        P2.forEach((tile) => {
+            tile.classList.remove("active");
+        });
+        P1.forEach((tile) => {
+            tile.classList.add("active");
+        });
+    } else {
+        const P2 = document.querySelectorAll(".P2");
+        const P1 = document.querySelectorAll(".P1");
+        P1.forEach((tile) => {
+            tile.classList.remove("active");
+        });
+        P2.forEach((tile) => {
+            tile.classList.add("active");
+        });
+    }
+}

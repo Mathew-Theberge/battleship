@@ -34,7 +34,12 @@ body {
     height: 45px;
     border: 1px solid rgba(255, 255, 255, 0.589);
     margin: 1px;
-    background-color: rgba(97, 137, 224, 0.089);
+    background-color: rgba(97, 137, 224, 0.63);
+}
+
+.active {
+    border: 1px solid rgba(255, 255, 255, 0.925);
+    margin-top: 2px;
 }
 
 .letterTile,
@@ -73,7 +78,7 @@ body {
 }
 
 .hideShip {
-    background-color: rgba(97, 137, 224, 0.089);
+    background-color: rgba(97, 137, 224, 0.63);
 }
 
 .miss {
@@ -93,11 +98,6 @@ body {
 .hitLogMsg {
     color: rgb(255, 0, 0);
 }
-
-#msgHeader {
-    height: 40px;
-}
-
 /* start screen ui layout */
 
 body #startScreen {
@@ -152,6 +152,7 @@ input::placeholder {
     width: 495px;
     margin: 0 2rem;
 }
+
 .boardContainer {
     display: flex;
     flex-direction: column;
@@ -164,6 +165,7 @@ input::placeholder {
     flex-direction: column;
     gap: 32px;
     margin-top: 4rem;
+    overflow: hidden;
 }
 
 #player1Log,

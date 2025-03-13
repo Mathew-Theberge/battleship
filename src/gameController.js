@@ -12,6 +12,7 @@ import {
     renderStartGameUI,
     hideShips,
     showAllShips,
+    toggleTurnColor,
 } from "./DOM.js";
 
 import { Player, receiveAttack, Ship } from "./app.js";
@@ -25,10 +26,11 @@ export const gameController = {
     player2Name: null,
 
     startGame: () => {
+        toggleTurnColor();
         const names = gameController.setPlayerNames();
         gameController.player1Name = names[0];
         gameController.player2Name = names[1];
-        updatePlayer1Log("");
+        updatePlayer1Log(`its ${gameController.player1Name}(s) Turn`);
         updatePlayer2Log("");
 
         renderStartGameUI();
@@ -37,6 +39,7 @@ export const gameController = {
     },
 
     startComputerGame: () => {
+        toggleTurnColor();
         updatePlayer1Log("Its Players Turn");
         updatePlayer2Log("Computer is waiting");
         gameController.setPlayerNames(true);
@@ -61,6 +64,7 @@ export const gameController = {
             gameController.player2sTurn = false;
             gameController.player1sTurn = true;
         }
+        toggleTurnColor(gameController.player1sTurn);
     },
 
     playComputersTurn: () => {
@@ -106,7 +110,7 @@ export const gameController = {
                 renderAttacks(gameController.player1.gameboard.board, "P1");
                 gameController.changePlayerTurn();
             },
-            Math.random() * 1000 + 500,
+            Math.random() * 2000 + 500,
         );
     },
 
