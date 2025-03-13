@@ -159,6 +159,7 @@ input::placeholder {
     display: flex;
     flex-direction: column;
     gap: 32px;
+    margin-top: 4rem;
 }
 
 #player1Log,
@@ -192,10 +193,15 @@ footer {
     border-top: rgb(0, 0, 0) 2px solid;
     border-bottom: rgb(0, 0, 0) 2px solid;
     margin-top: 2rem;
-    font-size: 4rem;
+    font-size: 3.25rem;
     padding: 8px;
     font-weight: 500;
     background-color: rgba(0, 0, 0, 0.308);
+}
+
+footer > :first-child {
+    font-size: 1.5rem;
+    font-weight: 700;
 }
 
 /* main styling */

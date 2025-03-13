@@ -6,6 +6,7 @@ import {
     renderShips,
     updateMsgHeader,
     updatePlayer1Log,
+    updatePlayer2Log,
 } from "./DOM.js";
 import { gameController } from "./gameController.js";
 
@@ -15,11 +16,15 @@ const P2 = createGameboard("P2");
 renderGameboard(P1, "P1");
 renderGameboard(P2, "P2");
 
+updatePlayer1Log("This is the attack log");
+updatePlayer2Log("Recent attcks and there effects are shown here");
+
 const playComputerBtn = document.querySelector("#computerBtn");
 
 playComputerBtn.addEventListener("click", () => {
     if (gameController.player1.gameboard.isBoardEmpty()) {
-        updatePlayer1Log("Must place your ships before starting");
+        updatePlayer1Log("Place ships on first board before starting");
+        updatePlayer2Log("");
     } else {
         gameController.startComputerGame();
 
@@ -41,6 +46,12 @@ playComputerBtn.addEventListener("click", () => {
 });
 
 const randomizePlayer1ShipsBtn = document.querySelector("#player1RandomBtn");
+const randomizePlayer2ShipsBtn = document.querySelector("#player2RandomBtn");
+
 randomizePlayer1ShipsBtn.addEventListener("click", () => {
     gameController.setRandomShipBoard(gameController.player1.gameboard, "P1");
+});
+
+randomizePlayer2ShipsBtn.addEventListener("click", () => {
+    gameController.setRandomShipBoard(gameController.player2.gameboard, "P2");
 });

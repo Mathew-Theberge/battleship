@@ -20,12 +20,17 @@ export const gameController = {
     player2: new Player("Player 2"),
 
     startComputerGame: () => {
+        updatePlayer1Log("Its Players Turn");
+        updatePlayer2Log("Computer is waiting");
         gameController.setPlayerNames(true);
 
         renderPlayComputerUI();
 
         gameController.player2 = new Player("computer");
 
+        // renders blank board incase player added ships to second board
+        // then played agaist the computer
+        renderShips(gameController.player2.gameboard.board, "P2");
         gameController.placeRandomShips(gameController.player2.gameboard);
 
         renderShips(gameController.player1.gameboard.board, "P1");

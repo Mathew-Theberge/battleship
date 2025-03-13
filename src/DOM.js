@@ -106,7 +106,7 @@ export function renderAttacks(board, player) {
 }
 
 export function renderAttackLog(enemysBoard) {
-    const log = document.querySelector("footer");
+    const log = document.querySelector(".attackHistory");
     log.replaceChildren();
     let i = 0;
     enemysBoard.attackLog.forEach((arr) => {
@@ -144,6 +144,10 @@ export function renderPlayComputerUI() {
     const buttonFooter = document.querySelector("#buttonFooter");
     buttonFooter.remove();
     const footer = document.createElement("footer");
-    footer.textContent = "Attack Log";
     document.body.append(footer);
+    const attackHistoryDiv = document.createElement("div");
+    const attackHistory = document.createElement("div");
+    attackHistory.classList.add("attackHistory");
+    attackHistoryDiv.textContent = "Your Attack History";
+    footer.append(attackHistoryDiv, attackHistory);
 }
