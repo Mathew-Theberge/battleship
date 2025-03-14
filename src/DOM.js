@@ -110,6 +110,7 @@ export function showAllShips(board, player) {
                     `.${char.toUpperCase()}${i}-${player}`,
                 );
                 tile.classList.remove("hideShip");
+                tile.classList.add("ship");
             }
         }
     }

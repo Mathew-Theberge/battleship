@@ -52,6 +52,7 @@ export const gameController = {
         // renders blank board incase player added ships to second board
         // then played agaist the computer
         renderShips(gameController.player2.gameboard.board, "P2");
+        showAllShips(gameController.player1.gameboard.board, "P1");
         gameController.placeRandomShips(gameController.player2.gameboard);
 
         renderShips(gameController.player1.gameboard.board, "P1");
@@ -100,6 +101,13 @@ export const gameController = {
             );
             char = attack[0];
             num = attack[1];
+        } else if (Object.keys(allAttacks).length === 25) {
+            console.log("25");
+            let attack = gameController.guaranteedHit(
+                gameController.player1.gameboard.board,
+            );
+            char = attack[0];
+            num = attack[1];
         } else {
             console.log();
             let attack =
@@ -121,10 +129,7 @@ export const gameController = {
         updatePlayer2Log("Computer is attacking");
         setTimeout(
             () => {
-                if (
-                    ValueOfAttack instanceof Ship &&
-                    !Array.isArray(ValueOfAttack)
-                ) {
+                if (ValueOfAttack instanceof Ship) {
                     updatePlayer2Log(
                         `Computer Sunk Your Ship at ${char + num}!`,
                     );
@@ -151,7 +156,7 @@ export const gameController = {
                 renderAttacks(gameController.player1.gameboard.board, "P1");
                 gameController.changePlayerTurn();
             },
-            // Math.random() * 2000 + 500,
+            Math.random() * 2000 + 500,
         );
     },
 
